@@ -1,0 +1,7 @@
+<app-navbar></app-navbar>
+
+<button (click)="authService.login()">Logga in</button>
+<p>{{authService.authenticated()}}</p>
+<div id="main" class="container">
+	<router-outlet></router-outlet>
+</div>

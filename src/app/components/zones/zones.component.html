@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-md-4" *ngFor="let zone of zones">
+		<div class="container-zone">
+			<div class="zone-background">
+				{{zone.name}}
+			</div>
+			<a *ngFor="let employee of zone.employees" class="zone-link">
+				<span class="badge">
+					{{employee.firstName ? (employee.firstName | initials) : "?"}}
+					{{employee.lastName ? (employee.lastName | initials) : "?"}}
+				</span>
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="color-info">
+	<span *ngFor="let department of departments" [ngStyle]="{'background-color': department.color}"  class="badge">{{department.name}}</span>
+</div>

@@ -1,0 +1,20 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" (click)="collapse()"><span class="fa fa-bars"></span></button>
+			<a routerLink="/home" class="navbar-brand">Get Me A Colleague</a>
+		</div>
+		<div class="container">
+			<div class="navbar-collapse collapse" [collapse]="isCollapsed">
+				<ul class="nav navbar-nav navbar-left">
+					<li *ngIf="authService.authenticated()"><a routerLink="/map"><span class="fa fa-map"></span> Karta</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li *ngIf="!authService.authenticated()"><a (click)="authService.login()"><span class="fa fa-sign-in"></span> Logga in</a></li>
+					<li *ngIf="authService.authenticated()"><a routerLink="/profile"><span class="fa fa-user"></span><span *ngIf="authService.hasProfile()"> {{authService.getProfile().username}}</span></a></li>
+					<li *ngIf="authService.authenticated()"><a (click)="logout()"><span class="fa fa-sign-out"></span> Logga ut</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
