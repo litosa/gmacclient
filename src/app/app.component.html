@@ -1,7 +1,7 @@
-<app-navbar></app-navbar>
+<app-navbar *ngIf="authService.authenticated()"></app-navbar>
 
-<button (click)="authService.login()">Logga in</button>
-<p>{{authService.authenticated()}}</p>
 <div id="main" class="container">
 	<router-outlet></router-outlet>
 </div>
+
+<app-details *ngIf="authService.authenticated()"></app-details>

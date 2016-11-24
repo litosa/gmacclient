@@ -1,0 +1,8 @@
+.update-disabled {
+    color: lightgrey;
+    cursor: default
+}
+
+.update-disabled:hover {
+    color: lightgrey;
+}

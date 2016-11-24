@@ -1,0 +1,17 @@
+.employee-details {
+        margin-top: 20px;
+        text-align: center;
+}
+
+.employee-actions {
+        padding-left: 15px;
+        padding-right: 15px;
+}
+
+.employee-info {
+    margin-top: 50px;
+}
+
+.employee-details-avatar {
+        padding: 20px;
+}

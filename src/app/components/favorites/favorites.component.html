@@ -1,0 +1,4 @@
+<h5 class="action-title">Favoriter</h5>
+<hr>
+<app-employee-list-item *ngFor="let favoriteEmployee of favoriteEmployees" [employee]="favoriteEmployee" [departmentName]="getDepartmentName(favoriteEmployee.departmentId)"
+    [isFavorite]="employeeService.isFavorite(favoriteEmployee._id)" (onFavoriteToggled)="employeeService.toggleFavorite($event)"></app-employee-list-item>

@@ -1,0 +1,18 @@
+<div class="sidebar sidebar-default sidebar-right" [ngClass]="{'sidebar-open': employee}">
+	<!--<app-employee-details [employee]="employee" [isFavorite]="isFavorite" (onClosed)="employee = null"></app-employee-details>-->
+	<a (click)="close()"><span class="fa fa-2x fa-times close-button"></span></a>
+	<div *ngIf="employee" class="employee-details">
+		<h4>{{employee.firstName}} {{employee.lastName}}</h4>
+		<div class="employee-details-avatar">
+			<img class="img-responsive img-circle" [src]="employee.imageUrl" alt="profile picture">
+		</div>
+		<div class="employee-actions">
+			<a><span class="fa fa-2x pull-left" [ngClass]="{'fa-star-o': !employeeService.isFavorite(employee._id), 'fa-star': employeeService.isFavorite(employee._id)}" (click)="employeeService.toggleFavorite(employee._id)"></span></a>
+			<a><span class="fa fa-2x fa-comment pull-right"></span></a>
+		</div>
+		<div class="employee-info">
+			<p>{{employee.email}}</p>
+			<p>{{getDepartmentName(employee.departmentId)}}</p>
+		</div>
+	</div>
+</div>

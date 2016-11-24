@@ -1,22 +1,32 @@
-<div class="row">
-	<div class="col-md-4 col-md-offset-4">
-		<form novalidate>
-			<div class="form-group">
-				<label for="email">Email</label>
-				<input [(ngModel)]="profile.email" class="form-control" id="email" type="text" name="profile.email">
+<div *ngIf="isBusy">
+	<app-loading></app-loading>
+</div>
+<div *ngIf="!isBusy">
+	<h5 class="action-title">Profil
+		<div class="pull-right">
+			<a [ngClass]="{'update-disabled': form.pristine}" (click)="updateEmployee()"><span *ngIf="isUpdating" class="fa fa-spinner fa-spin"></span><span class="fa fa-check"></span></a>
+			<a (click)="authService.logout()"><span class="fa fa-sign-out"></span></a>
+		</div>
+	</h5>
+	<hr>
+	<form [formGroup]="form">
+		<div class="form-group">
+			<label for="firstName">Förnamn</label>
+			<input formControlName="firstName" class="form-control input-sm" id="firstName" type="text">
+		</div>
+		<div class="form-group">
+			<label for="lastName">Efternamn</label>
+			<input formControlName="lastName" class="form-control input-sm" id="lastName" type="text">
+		</div>
+		<div class="form-group">
+			<label>Avdelning</label>
+			<div *ngFor="let department of departments">
+				<label><input formControlName="departmentId" type="radio" [value]="department._id"> {{department.name}}</label>
 			</div>
-			<div class="form-group">
-				<label for="firstName">Förnamn</label>
-				<input [(ngModel)]="profile.firstName" class="form-control" id="firstName" type="text" name="profile.firstName">
-			</div>
-			<div class="form-group">
-				<label for="lastName">Efternamn</label>
-				<input [(ngModel)]="profile.lastName" class="form-control" id="lastName" type="text" name="profile.lastName">
-			</div>
-			<div class="form-group">
-				<button class="btn btn-primary" (click)="updateProfile()">Uppdatera</button>
-				<button (click)="goBack()" type="button" class="btn btn-default">Tillbaka</button>
-			</div>
-		</form>
-	</div>
+		</div>
+		<div class="form-group">
+			<label for="isHiding">Dölj på kartan</label>
+			<input formControlName="isHiding" id="isHiding" type="checkbox">
+		</div>
+	</form>
 </div>

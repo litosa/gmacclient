@@ -1,16 +1,13 @@
 export class AppSettings {
 
     public static get apiUrl(): string {
-        // var localUrl = 'http://localhost:3000/api';
-        var apiUrl = 'http://gmacapi.azurewebsites.net/api';
-        // return localUrl;
-        return apiUrl;
+        var azureUrl = 'http://gmac-api.azurewebsites.net';
+        var localUrl = 'http://localhost:1337';
+        return azureUrl;
     }
 
     public static get clientUrl(): string {
-        // var localUrl = 'http://localhost:4200';
-        // return localUrl;
-        var localUrl = 'http://gmacclient.azurewebsites.net';
+        var localUrl = 'http://localhost:4200';
         return localUrl;
     }
 

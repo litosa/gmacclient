@@ -1,0 +1,5 @@
+<span *ngIf="isFavorite" class="fa fa-star text-warning favorite-employee"></span>
+<div *ngIf="isSelected" class="arrow arrow-single bounce"><span class="fa fa-arrow-down"></span></div>
+<a (click)="toggleEmployeeDetails()">
+  <img class="employee-avatar" [src]="employee.imageUrl" [ngStyle]="{'color': departmentColor}" alt="profile picture">
+</a>

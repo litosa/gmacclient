@@ -1,0 +1,37 @@
+<div *ngIf="isBusy">
+	<app-loading></app-loading>
+</div>
+<div *ngIf="!isBusy">
+	<div class="map">
+		<div class="map-container">
+			<div *ngFor="let zone of zones" [ngStyle]="{'top': zone.zoneCoordinates.longitude + 'px', 'left': zone.zoneCoordinates.latitude + 'px'}">
+				<div class="zone-container" [ngStyle]="{'width': zone.width + 'px', 'height': zone.height + 'px'}">
+					<span class="zone-name" [ngStyle]="{'top': zone.nameCoordinates.longitude + 'px', 'left': zone.nameCoordinates.latitude + 'px'}">{{zone.name}}</span>
+					<div class="employee-container" *ngFor="let employeeContainer of zone.employeeContainers" [ngStyle]="{'width': employeeContainer.width + 'px', 'height': employeeContainer.height + 'px', 'top': employeeContainer.coordinates.longitude + 'px', 'left': employeeContainer.coordinates.latitude + 'px'}">
+						<employee-map-item *ngFor="let employee of employeeContainer.employees" class="map-employee" [employee]="employee" [departmentColor]="getDepartmentColor(employee.departmentId)"
+							[isSelected]="selectedEmployeeId === employee._id" [isFavorite]="employeeService.isFavorite(employee._id)" (onToggleSelect)="toggleEmployeeDetails($event)"></employee-map-item>
+					</div>
+				</div>
+			</div>
+			<div *ngFor="let room of rooms" [tooltip]="room.name" [tooltipAppendToBody]="true" [ngStyle]="{'width': room.width + 'px', 'height': room.height + 'px', 'top': room.coordinates.longitude + 'px', 'left': room.coordinates.latitude + 'px'}">
+				<div class="employee-group" *ngIf="room.employees.length > 1 && !room.isExpanded" [ngClass]="{'employee-group-small': room.employees.length === 2, 'employee-group-big': room.employees.length > 2}">
+					<div *ngIf="roomContainsSelectedEmployee(room)" class="arrow arrow-group bounce"><span class="fa fa-arrow-down"></span></div>
+					<span *ngIf="room.employees.length > 4" class="badge employee-group-number">{{room.employees.length}}</span>
+					<a (click)="room.isExpanded = true">
+						<div class="employee-group-item" *ngFor="let employee of room.employees;  let i=index">
+							<img *ngIf="i < 4" class="img-responsive" [src]="employee.imageUrl" alt="profile picture">
+						</div>
+						<div *ngIf="room.employees.length === 3" class="employee-group-item employee-group-item-filler"><span>3</span></div>
+					</a>
+				</div>
+				<div *ngIf="room.isExpanded || room.employees.length === 1">
+					<div [ngClass]="{'expanded-room': room.isExpanded && room.employees.length > 1}">
+						<a *ngIf="room.isExpanded && room.employees.length > 1" (click)="room.isExpanded = false"><span class="fa fa-times"></span></a>
+						<employee-map-item *ngFor="let employee of room.employees" class="map-employee" [employee]="employee" [departmentColor]="getDepartmentColor(employee.departmentId)"
+							[isSelected]="selectedEmployeeId === employee._id" [isFavorite]="employeeService.isFavorite(employee._id)" (onToggleSelect)="toggleEmployeeDetails($event)"></employee-map-item>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

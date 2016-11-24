@@ -6,3 +6,101 @@
 a:hover {
     cursor: pointer;
 }
+
+.fa-spinner {
+  color: #8da7ba;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.sidebar a {
+    text-decoration: none;
+    transition: 0.3s
+}
+
+.sidebar-default {
+    background-color: #526e83;
+    color: #f1f1f1;
+}
+
+.sidebar-default a {
+    color: #c1c1c1;
+}
+
+.sidebar-default a:hover, .offcanvas a:focus {
+    color: #f1f1f1;
+}
+
+.sidebar-default a span.active {
+    color: #f1f1f1;
+}
+
+.sidebar-inverse {
+    background-color: #f1f1f1;
+    color: #526e83;
+}
+
+.sidebar-inverse a {
+    color: #2b4558;
+}
+
+.sidebar-inverse a:hover, .offcanvas a:focus {
+    color: #526e83;
+}
+
+.sidebar-inverse hr {
+    border-top-color: #526e83;    
+}
+
+.close-button {
+    padding: 10px;
+    display: block;
+}
+
+.action-title {
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.action-title a {
+    margin-left: 10px;
+}
+
+.sidebar-right {
+    right: 0;
+}
+
+.sidebar-right.sidebar-open {
+    width: 200px;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.arrow {
+    position: absolute;
+    margin: auto;
+    font-size: 40px;
+    color: #526e83;
+}
+
+.bounce {
+  animation: bounce 2s infinite;
+}

@@ -1,20 +1,14 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" (click)="collapse()"><span class="fa fa-bars"></span></button>
-			<a routerLink="/home" class="navbar-brand">Get Me A Colleague</a>
-		</div>
-		<div class="container">
-			<div class="navbar-collapse collapse" [collapse]="isCollapsed">
-				<ul class="nav navbar-nav navbar-left">
-					<li *ngIf="authService.authenticated()"><a routerLink="/map"><span class="fa fa-map"></span> Karta</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li *ngIf="!authService.authenticated()"><a (click)="authService.login()"><span class="fa fa-sign-in"></span> Logga in</a></li>
-					<li *ngIf="authService.authenticated()"><a routerLink="/profile"><span class="fa fa-user"></span><span *ngIf="authService.hasProfile()"> {{authService.getProfile().username}}</span></a></li>
-					<li *ngIf="authService.authenticated()"><a (click)="logout()"><span class="fa fa-sign-out"></span> Logga ut</a></li>
-				</ul>
-			</div>
-		</div>
+<div class="sidebar sidebar-default sidebar-nav">
+	<a (click)="toggleOpen(actionLink)" *ngFor="let actionLink of actionLinks">
+		<span class="fa {{actionLink.icon}}" [ngClass]="{'active': activeActionLink === actionLink}"></span>
+	</a>
+</div>
+
+<div class="sidebar sidebar-inverse sidebar-left" [ngClass]="{'sidebar-open': activeActionLink}">
+	<div class="sidebar-left-container" *ngIf="activeActionLink">
+		<app-profile *ngIf="activeActionLink.action === action.profile" (onUpdate)="toggleOpen(activeActionLink)"></app-profile>
+		<app-favorites *ngIf="activeActionLink.action === action.favorites"></app-favorites>
+		<app-search *ngIf="activeActionLink.action === action.search"></app-search>
+		<app-settings *ngIf="activeActionLink.action === action.settings"></app-settings>
 	</div>
-</nav>
+</div>

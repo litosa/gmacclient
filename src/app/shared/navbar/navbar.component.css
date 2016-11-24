@@ -1,0 +1,23 @@
+.sidebar-nav {
+    left: 0;
+    width: 40px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.sidebar-nav span {
+    display: block;
+    margin-top: 20px;
+}
+
+.sidebar-left {
+    left: 40px;
+}
+
+.sidebar-left.sidebar-open {
+    width: 250px;
+}
+
+.sidebar-left-container {
+    padding: 10px;
+}

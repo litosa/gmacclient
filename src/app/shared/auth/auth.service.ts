@@ -3,9 +3,8 @@ import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import * as io from 'socket.io-client';
-
 import { EmployeeService } from '../../services/employee.service';
+import { ImageService } from '../../services/image.service';
 import { Employee } from '../../models/employee';
 
 import { AppSettings } from '../app-settings';
@@ -16,63 +15,65 @@ let Auth0Lock = require('auth0-lock').default;
 export class AuthService {
 
   lock = new Auth0Lock(AppSettings.clientId, AppSettings.authDomain, {
-    // closable: false,
+    closable: false,
     language: 'sv',
-    // allowSignUp: false,
-    // auth: {
-    //   redirect: false
-    // },
-    // redirect: true,
-    redirectUrl: `${AppSettings.clientUrl}/rooms`,
     theme: {
-      logo: "../../../gmac-logo.png",
-      primaryColor: "#204e99"
+      logo: "../../../assets/img/gmac-logo.png",
+      primaryColor: "#526e83"
     },
     languageDictionary: {
       title: "Get Me A Colleague"
     }
   });
 
-  private userName : string;
-
   constructor(
     private employeeService: EmployeeService,
+    private imageService: ImageService,
     private router: Router) {
 
     this.lock.on("authenticated", (authResult: any) => {
+
+      localStorage.setItem('id_token', authResult.idToken);
+
       this.lock.getProfile(authResult.idToken, function (error: any, profile: any) {
         if (error) {
           throw new Error(error);
         }
-
-        localStorage.setItem('id_token', authResult.idToken);
 
         employeeService.getEmployeeById(profile.user_id).then((employee: Employee) => {
           if (employee == null) {
 
             employee = new Employee();
             employee._id = profile.user_id;
-            employee.username = profile.name;
+            employee.email = profile.email;
 
-            if (profile.name.includes(' ')) {
-              var fullName = profile.name.split(' ');
-              employee.firstName = fullName[0];
-              employee.lastName = fullName[1];
+            var employeeUrl = employee.email.split('@')[0];
+
+            while (employeeUrl.includes('.')) {
+              employeeUrl = employeeUrl.replace('.', '_');
             }
 
-            else {
-              employee.email = profile.name;
-            }
+            imageService.getImageById('sigma_employees').then(collection => {
+              if (collection.sources.find(s => s === employeeUrl)) {
+                employee.imageUrl = 'assets/img/employees/' + employeeUrl + '.jpg';
+              }
+              else {
+                employee.imageUrl = 'assets/img/employees/default_user.jpg';
+              }
 
-            employeeService.postEmployee(employee).then(() => {
-              localStorage.setItem('profile', JSON.stringify(employee));
-            });
+              employeeService.postEmployee(employee).then((employee) => {
+                localStorage.setItem('profile', JSON.stringify(employee));
+                router.navigate(['/']);
+              });
+            })
           }
           else {
             localStorage.setItem('profile', JSON.stringify(employee));
+            router.navigate(['/']);
           }
         });
       });
+      this.lock.hide();
     });
   }
 
@@ -83,7 +84,7 @@ export class AuthService {
     return false;
   }
 
-  public getProfile() {
+  public getProfile(): Employee {
     return JSON.parse(localStorage.getItem('profile'));
   }
 
@@ -98,5 +99,6 @@ export class AuthService {
   public logout() {
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
+    this.login();
   };
 }

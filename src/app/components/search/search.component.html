@@ -1,0 +1,7 @@
+<h5 class="action-title">Sök</h5>
+<hr>
+<input type="search" class="form-control" [formControl]="searchControl" placeholder="Sök efter anställd">
+<h5 class="small pull-right" *ngIf="searchResults">{{searchResults.length}} resultat</h5>
+
+<app-employee-list-item *ngFor="let searchResult of searchResults" [employee]="searchResult" [departmentName]="getDepartmentName(searchResult.departmentId)"
+    [isFavorite]="employeeService.isFavorite(searchResult._id)" (onFavoriteToggled)="employeeService.toggleFavorite($event)"></app-employee-list-item>

@@ -1,40 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Action } from '../../enums/action';
+import { ActionLink } from '../../models/action-link';
+import { Employee } from '../../models/employee';
 import { AuthService } from '../auth/auth.service';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
-  public isCollapsed: boolean = true;
-
+  actionLinks: ActionLink[];
+  activeActionLink: ActionLink;
+  action = Action;
+  
   constructor(
     private authService: AuthService,
+    private employeeService: EmployeeService,
     private router: Router) { }
 
-  logout() {
-    // this.authService.logoutUser();
-    // this.isCollapsed = true;
-    // this.router.navigate(['/login'])
-    this.authService.logout();
-    this.router.navigate(['/home']);
-
+  ngOnInit() {
+    this.actionLinks = [
+      new ActionLink('Profil', Action.profile, 'fa-user'), 
+      new ActionLink('Sök', Action.search, 'fa-search'), 
+      new ActionLink('Filter', Action.settings, 'fa-cog'),
+      new ActionLink('Favoriter', Action.favorites, 'fa-star')]
   }
 
-  isActive(path: string) {
-    return this.router.isActive(path, true)
+  toggleOpen(actionLink: ActionLink) {
+    if (this.activeActionLink !== actionLink) {
+      this.activeActionLink = actionLink;
+    }
+    else {
+      this.activeActionLink = null;
+    }
   }
 
-  collapse() {
-    this.isCollapsed = !this.isCollapsed;
-
-    // if (!this.authService.loggedIn())
-    // {
-    //   this.router.navigate(['/login'])
-    // }
+  closeAll() {
+    this.actionLinks.forEach((a) => a.isOpen = false);
   }
 }

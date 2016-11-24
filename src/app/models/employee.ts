@@ -1,12 +1,17 @@
+import { Favorite } from './favorite';
+import { Coords } from './coords';
+
 export class Employee {
     _id: string;
-    username: string;
     email: string;
     firstName: string;
     lastName: string;
-    department: string;
-    currentZone: string;
-    currentRoom: string;
+    departmentId: string;
     isHiding: boolean;
     isInBuilding: boolean;
+    favorites: Favorite[];
+    coordinates: Coords;
+    imageUrl: string;
+    currentZoneId: string;
+    currentRoomId: string;
 }

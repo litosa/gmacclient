@@ -1,0 +1,8 @@
+.list-group-item.is-filtered {
+    color: darkgray;
+    opacity: 0.5;
+}
+
+.list-group-item.is-filtered:hover {
+    color: slategrey;
+}

@@ -1,0 +1,19 @@
+<div class="row employee-list-item">
+	<a (click)="toggleEmployeeDetails()" class="col-md-10 col-xs-10">
+		<div class="row">
+			<div class="col-md-3 col-xs-3">
+				<img [src]="employee.imageUrl" alt="profile picture" class="img-responsive img-circle">
+			</div>
+			<div class="col-md-9 col-xs-9 employee-list-item-info">
+				<h5>{{employee.firstName}} {{employee.lastName}}</h5>
+				<p>{{departmentName}}</p>
+			</div>
+		</div>
+	</a>
+	<a (click)="toggleFavorite()" class="col-md-2 col-xs-2 employee-list-item-favorite">
+		<span class="fa text-warning pull-right" [ngClass]="{'fa-star-o': !isFavorite, 'fa-star': isFavorite}"></span>
+	</a>
+	<div class="col-md-12 col-xs-12 hr-container">
+		<hr>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+.employee-avatar {
+    width:33px;
+    height:33px;
+    box-shadow: 0 0 10px;
+    border-radius: 50%;
+}
+
+.favorite-employee {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    text-shadow: 0px 0px 7px gold;
+}
+
+.arrow-single {
+    bottom: 20px;
+}

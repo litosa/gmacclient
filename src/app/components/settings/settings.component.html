@@ -1,0 +1,12 @@
+<h5 class="action-title">Filter</h5>
+<hr>
+<div class="list-group">
+  <a (click)="filterDepartments(department._id)" class="list-group-item" [ngClass]="{'is-filtered' : !departmentService.isInDepartmentFilter(department._id, departments)}" *ngFor="let department of departments">
+    {{department.name}} <span class="pull-right fa fa-circle" [ngStyle]="{'color': department.color}"></span>
+  </a>
+</div>
+<div class="list-group">
+  <a (click)="toggleOnlyFavorites()" class="list-group-item" [ngClass]="{'is-filtered' : !employeeService.isShowingOnlyFavorites()}">
+    Endast favoriter <span class="pull-right fa fa-star text-warning"></span>
+  </a>
+</div>

@@ -11,13 +11,14 @@ import { AppSettings } from '../shared/app-settings';
 @Injectable()
 export class ZoneService {
 
-  private url = `${AppSettings.apiUrl}/zones`
+  private url = `${AppSettings.apiUrl}/api/zones`
+  private socket: any;
 
   constructor(
     private authHttp: AuthHttp,
     private authService: AuthService) { }
 
-    getZones(): Promise<Zone[]> {
+  getZones(): Promise<Zone[]> {
     return this.authHttp
       .get(this.url)
       .toPromise()
